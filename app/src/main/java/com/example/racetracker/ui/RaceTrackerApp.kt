@@ -75,10 +75,26 @@ fun RaceTrackerApp() {
             coroutineScope {
                 launch { playerOne.run() }
                 launch { playerTwo.run() }
-            }
+            } // the above two coroutines must finish before the next line can execute
             raceInProgress = false
         }
     }
+
+    // To ensure the run() function of playerOne and playerTwo completes execution
+    // before updating the raceInProgress flag,
+    // wrap both launch builders with a coroutineScope block
+
+    /*
+    LaunchedEffect in Kotlin Android does not have a fixed number of keys.
+    It can accept any number of keys as needed, depending on the specific use case.
+    The keys are values that determine when the LaunchedEffect should be re-executed.
+    If any of the keys change during recomposition, the effect will be relaunched,
+    and its associated suspend function will be executed again.
+    The keys can be of any data type, such as strings, integers, booleans, objects, or even arrays.
+     */
+
+
+
     RaceTrackerScreen(
         playerOne = playerOne,
         playerTwo = playerTwo,
